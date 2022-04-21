@@ -3,38 +3,39 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
+web_scraping/.idea/**/workspace.xml
+web_scraping/.idea/**/tasks.xml
+web_scraping/.idea/**/usage.statistics.xml
+web_scraping/.idea/**/dictionaries
+web_scraping/.idea/**/shelf
 
+*/.idea
 # Generated files
-.idea/**/contentModel.xml
+web_scraping/.idea/**/contentModel.xml
 
 # Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
+web_scraping/.idea/**/dataSources/
+web_scraping/.idea/**/dataSources.ids
+web_scraping/.idea/**/dataSources.local.xml
+web_scraping/.idea/**/sqlDataSources.xml
+web_scraping/.idea/**/dynamic.xml
+web_scraping/.idea/**/uiDesigner.xml
+web_scraping/.idea/**/dbnavigator.xml
 
 # Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+web_scraping/.idea/**/gradle.xml
+web_scraping/.idea/**/libraries
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
-# .idea/artifacts
-# .idea/compiler.xml
-# .idea/jarRepositories.xml
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
+# web_scraping/.idea/artifacts
+# web_scraping/.idea/compiler.xml
+# web_scraping/.idea/jarRepositories.xml
+# web_scraping/.idea/modules.xml
+# web_scraping/.idea/*.iml
+# web_scraping/.idea/modules
 # *.iml
 # *.ipr
 
@@ -42,7 +43,7 @@
 cmake-build-*/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+web_scraping/.idea/**/mongoSettings.xml
 
 # File-based project format
 *.iws
@@ -51,13 +52,13 @@ cmake-build-*/
 out/
 
 # mpeltonen/sbt-idea plugin
-.idea_modules/
+web_scraping/.idea_modules/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
-.idea/replstate.xml
+web_scraping/.idea/replstate.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
@@ -66,10 +67,10 @@ crashlytics-build.properties
 fabric.properties
 
 # Editor-based Rest Client
-.idea/httpRequests
+web_scraping/.idea/httpRequests
 
 # Android studio 3.1+ serialized cache file
-.idea/caches/build_file_checksums.ser
+web_scraping/.idea/caches/build_file_checksums.ser
 
 ### VirtualEnv template
 # Virtualenv
@@ -95,7 +96,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-.Python
 build/
 develop-eggs/
 dist/
@@ -194,7 +194,6 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
 env/
 venv/
 ENV/
@@ -225,3 +224,4 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+*.json
