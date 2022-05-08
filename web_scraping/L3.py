@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 import time
-import json
+from pprint import pprint
+from pymongo import MongoClient, DESCENDING
 
 ENDPOINT_URL = 'https://hh.ru/search/vacancy'
 
@@ -18,6 +19,11 @@ HEADERS = {
 
 FILE = 'hh.json'
 
+host = "localhost"
+port = 27017
+mongo_db = "vacancy"
+mongo_collection = "hh"
+
 class HHScrapper:
     def __init__(self, url, vacancy, page, headers):
         self.url = url
@@ -25,7 +31,8 @@ class HHScrapper:
         self.page_number = page
         self.headers = headers
         self.params = self.create_params()
-        self.dic_vacancy = []
+#        self.dic_vacancy = []
+        self.count = 0
 
     def create_params(self):
         params_hh['text'] = self.vacancy
@@ -78,24 +85,43 @@ class HHScrapper:
             min_salary, max_salary, currency = self.get_salary(salary)
             link = element.find('a', class_='bloko-link').get('href')
             vacancy = dict(title=title, min_salary=min_salary, max_salary=max_salary, currency=currency, link=link, source='https://hh.ru/')
-            self.dic_vacancy.append(vacancy)
+            self.sent_to_db(vacancy)
 
-    def build_dic(self):
+    def sent_to_db(self, item):
+        with MongoClient(host, port) as client:
+            db = client[mongo_db]
+            collection = db[mongo_collection]
+            if not list(collection.find(item)):
+                collection.insert_one(item)
+                self.count += 1
+
+    def build_info(self):
         for page in range(0, self.page_number):
             self.params['page'] = page
             response = self.get_html_string()
             soup = self.get_dom(response)
             self.get_info(soup)
-        return self.dic_vacancy
 
     @staticmethod
-    def save_info(data, path):
-        with open(path, "w", encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+    def salary(salary):
+        with MongoClient(host, port) as client:
+            db = client[mongo_db]
+            collection = db[mongo_collection]
+            pprint(list(collection.find({
+                "$or": [
+                    {"max_salary": {"$gte": salary}},
+                    {"max_salary": None}
+                ]
+            }).sort(
+                [
+                    ("max_salary", DESCENDING),
+                    ("min_salary", DESCENDING),
+                ])))
 
 if __name__ == "__main__":
         vacancy = input("Enter vacancy: ")
         page_number = int(input("Enter the last page number: "))
         scrapper_hh = HHScrapper(ENDPOINT_URL, vacancy, page_number, HEADERS)
-        info_vacancy = scrapper_hh.build_dic()
-        scrapper_hh.save_info(info_vacancy, FILE)
+        scrapper_hh.build_info()
+        salary_input = int(input("Enter salary "))
+        scrapper_hh.salary(salary_input)
